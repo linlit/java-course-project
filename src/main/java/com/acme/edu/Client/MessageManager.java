@@ -4,21 +4,23 @@ import com.acme.edu.exception.ClientException;
 import com.acme.edu.exception.InvalidMessageException;
 import com.acme.edu.parser.CommandParser;
 
+import java.time.LocalDateTime;
+
 public class MessageManager {
-    public MessageManager() {
+    private String decorate(String message) {
+        return "/snd " + LocalDateTime.now() + " " + message.substring(5);
     }
 
-    public String decorate(String message) throws InvalidMessageException{
-        message = CommandParser.parse(message)
-        filterLen(message);
-        return message;
+    public String getFilteredMessage(String message) throws InvalidMessageException {
+        if (message.startsWith("/snd ")) {
+            filterLen(message.substring(5));
+            return decorate(message);
+        }
+        if (("/hist".equals(message)) || (("/exit".equals(message)))) return message;
+        throw new InvalidMessageException("Unknown command");
     }
 
-    private String parse(String message) { // /snd /hist /quit
-        message.contentEquals()
-    }
-
-    public void filterLen(String message) throws InvalidMessageException {
+    private void filterLen(String message) throws InvalidMessageException {
         if (message.length() > 150) throw new InvalidMessageException("Message length is over 150 characters");
     }
 

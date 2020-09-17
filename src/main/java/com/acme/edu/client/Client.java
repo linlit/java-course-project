@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Client-side logic of application
  */
 public class Client {
-    private static MessageManager manager = new com.acme.edu.client.MessageManager();
+    private static final MessageManager manager = new com.acme.edu.client.MessageManager();
 
     public static void main(String[] args) {
         try (
@@ -40,7 +40,7 @@ public class Client {
                 try {
                     String currentLine = in.nextLine();
                     sendMessage(currentLine, out);
-                    if(manager.isExitCommand(currentLine)) {
+                    if(MessageManager.isExitCommand(currentLine)) {
                         return;
                     }
                 } catch (ClientException e) {

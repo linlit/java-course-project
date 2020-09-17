@@ -8,7 +8,7 @@ import com.acme.edu.parser.reactors.*;
 /*
  * Creates command pattern for reacting on messages.
  */
-public class Commandor {
+public class MessageProcessor {
     public CommandReactor parse(String clientMessage, User user, ChatObserver observer) throws InvalidMessageException {
         String userName = user.getUserName();
 

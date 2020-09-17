@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class ChatObserver {
     static final Collection<User> chatMembers = new ConcurrentLinkedQueue<>(new ArrayList<>(1000));
+    static final ChatCache cache = new ChatCache();
 
     /*
      * Adding new user to group chat and update listeners
@@ -24,8 +25,8 @@ public class ChatObserver {
      * Deleting customer from chat.
      */
     public void unsubscribeFromChat(User client) {
-        client.unsubscribeFromChat();
         chatMembers.remove(client);
+        client.setUserDead();
     };
 
     /*
@@ -33,8 +34,10 @@ public class ChatObserver {
      */
     public void notifyChatMembers(String message) {
         synchronized (chatMembers) {
+            cache.add(message);
             chatMembers.forEach(user -> {
                 try {
+
                     user.notifyUser(message);
                 } catch (SendMessageException e) {
                     e.printStackTrace();
@@ -42,4 +45,13 @@ public class ChatObserver {
             });
         }
     };
+
+    public void preActions(User user) throws SendMessageException {
+        this.subscribeToChat(user);
+        this.loadHistory(user);
+    }
+
+    public void loadHistory(User user) throws SendMessageException {
+        user.notifyUser(cache.getHistoryChatCache());
+    }
 }

@@ -5,7 +5,13 @@ public class ChatException extends Exception {
         super(s, e);
     }
 
+    public ChatException() {
+        super();
+    }
+
     public ChatException(String s) {
         super(s);
     }
+
+
 }

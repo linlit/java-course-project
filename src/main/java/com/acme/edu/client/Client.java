@@ -11,6 +11,8 @@ import java.util.Scanner;
  * Client-side logic of application
  */
 public class Client {
+    private static MessageManager manager = new com.acme.edu.client.MessageManager();
+
     public static void main(String[] args) {
         try (
                 final Socket connection = new Socket("127.0.0.1", 10_000);
@@ -20,42 +22,46 @@ public class Client {
                 final DataOutputStream out =
                         new DataOutputStream(
                                 new BufferedOutputStream(connection.getOutputStream()));
-                Scanner in = new Scanner(System.in);
+                Scanner in = new Scanner(System.in)
         ) {
-
             Thread thread = new Thread(() -> {
-                while (true) {
+                while(true) {
                     try {
-                        String h = input.readUTF();
-                        System.out.println(h);
+                        String readLine = input.readUTF();
+                        System.out.println(readLine);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             });
+            thread.setDaemon(true);
             thread.start();
 
-            while (true) {
+            while(true) {
                 try {
-                    sendMessage(in.nextLine(), out);
+                    String currentLine = in.nextLine();
+                    sendMessage(currentLine, out);
+                    if(manager.isExitCommand(currentLine)) {
+                        //end main
+                        return;
+                    }
                 } catch (ClientException e) {
-                    e.printStackTrace();
-                    System.out.println("Try again");
+                    System.out.println("Please, try again!");
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Server is not available.");
         }
     }
 
     private static void sendMessage(String message, DataOutputStream out) throws ClientException {
         try {
-            String decoratedMessage = new MessageManager().getFilteredMessage(message);
+            String decoratedMessage = manager.getFilteredMessage(message);
             out.writeUTF(decoratedMessage);
             out.flush();
         } catch (IOException | InvalidMessageException e) {
-            e.printStackTrace();
-            throw new ClientException("Couldn't send the message", e);
+            throw new ClientException();
         }
     }
 }

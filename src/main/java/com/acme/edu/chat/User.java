@@ -10,25 +10,36 @@ import java.io.IOException;
  * Supports current auth status and connection.
  */
 public class User {
-    volatile private boolean isAuthenticated;
+    private String userName;
     private final DataOutputStream outputStream;
-
+    private volatile  boolean isUserAlive;
     public User(DataOutputStream out) {
         this.outputStream = out;
-        this.isAuthenticated = true;
+        this.isUserAlive = true;
     }
-    void notifyUser(String message) throws SendMessageException {
+
+    public void setUserDead() {
+        this.isUserAlive = false;
+    }
+
+    public boolean isUserAlive() {
+        return isUserAlive;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void notifyUser(String message) throws SendMessageException {
         try {
-            if (this.isAuthenticated) {
-                this.outputStream.writeUTF(message);
-                outputStream.flush();
-            }
+            this.outputStream.writeUTF(message);
+            outputStream.flush();
         } catch (IOException e) {
             throw new SendMessageException("Cannot write a message to this stream", e);
         }
-    }
-
-    void unsubscribeFromChat() {
-        this.isAuthenticated = false;
     }
 }

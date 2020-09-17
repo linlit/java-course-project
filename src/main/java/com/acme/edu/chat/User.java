@@ -23,7 +23,7 @@ public class User {
         this.userName = userName;
     }
 
-    void notifyUser(String message) throws SendMessageException {
+    public void notifyUser(String message) throws SendMessageException {
         try {
             if (this.isAuthenticated) {
                 if (this.userName != null) {

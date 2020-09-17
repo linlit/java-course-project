@@ -12,7 +12,7 @@ public class Commandor {
     public CommandReactor parse(String clientMessage, User user, ChatObserver observer)
             throws InvalidMessageException {
         if (clientMessage.startsWith("/hist")) {
-            return new HistoryReactor();
+            return new HistoryReactor(user, observer);
         } else if (clientMessage.startsWith("/snd")) {
             return new SendReactor(clientMessage.split("/snd")[1], observer);
         } else if (clientMessage.trim().equals("/exit")) {

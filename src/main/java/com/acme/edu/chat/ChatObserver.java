@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ChatObserver {
     static final Collection<User> chatMembers = new ConcurrentLinkedQueue<>(new ArrayList<>(1000));
     static final ChatCache cache = new ChatCache();
+
     /*
      * Adding new user to group chat and update listeners
      * @param client  new client
@@ -49,7 +50,7 @@ public class ChatObserver {
         this.loadHistory(user);
     }
 
-    private void loadHistory(User user) throws SendMessageException {
+    public void loadHistory(User user) throws SendMessageException {
         user.notifyUser(cache.getHistoryChatCache());
     }
 }

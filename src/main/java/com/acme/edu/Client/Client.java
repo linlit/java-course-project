@@ -13,7 +13,10 @@ public class Client {
                      new BufferedOutputStream(
                              connection.getOutputStream()));
         ) {
-            out.writeUTF("/start");
+            while (true) {
+                out.writeUTF(input.readUTF());
+                out.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

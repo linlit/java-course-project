@@ -2,8 +2,6 @@ package com.acme.edu.Server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
-import com.acme.edu.exception.ConnectionFailedException;
-import com.acme.edu.exception.InvalidMessageException;
 import com.acme.edu.parser.CommandParser;
 
 import java.io.*;
@@ -19,7 +17,7 @@ public class Server {
     private static final ChatObserver observer = new ChatObserver();
     private static final CommandParser commandParser = new CommandParser();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
             ExecutorService executor =  Executors.newFixedThreadPool(1000);
 
@@ -38,12 +36,11 @@ public class Server {
         }
     }
 
-
     private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
         observer.subscribeToChat(user);
 
-        while(true) {
+        while (true) {
             try {
                 final String clientMessage = inputStream.readUTF();
                 commandParser.parse(clientMessage);

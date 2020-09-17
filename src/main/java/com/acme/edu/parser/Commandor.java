@@ -16,7 +16,7 @@ public class Commandor {
         } else if (clientMessage.startsWith("/snd")) {
             return new SendReactor(clientMessage.split("/snd")[1], observer);
         } else if (clientMessage.trim().equals("/exit")) {
-            return new ExitReactor(user);
+            return new ExitReactor(user, observer);
         } else if (clientMessage.startsWith("/chid")) {
             return new AuthReactor(clientMessage.split("/chid")[1], user);
         } else {

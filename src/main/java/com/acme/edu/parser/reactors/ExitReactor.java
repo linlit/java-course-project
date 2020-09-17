@@ -1,5 +1,6 @@
 package com.acme.edu.parser.reactors;
 
+import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 
 /*
@@ -7,13 +8,15 @@ import com.acme.edu.chat.User;
  */
 public class ExitReactor implements CommandReactor {
     private final User user;
+    private final ChatObserver observer;
 
-    public ExitReactor(User user) {
+    public ExitReactor(User user, ChatObserver observer) {
         this.user = user;
+        this.observer = observer;
     }
 
     @Override
     public void react() {
-        this.user.unsubscribeFromChat();
+        this.observer.unsubscribeFromChat(this.user);
     }
 }

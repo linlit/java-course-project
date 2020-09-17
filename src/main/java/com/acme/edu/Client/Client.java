@@ -23,7 +23,7 @@ public class Client {
                 try {
                     sendMessage(in.nextLine(), out);
                 } catch (ClientException e) {
-                    e.printStackTrace();
+                        e.printStackTrace();
                     System.out.println("Try again");
                 }
             }

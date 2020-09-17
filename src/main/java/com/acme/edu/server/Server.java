@@ -3,6 +3,7 @@ package com.acme.edu.server;
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 
+import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.SendMessageException;
 import com.acme.edu.parser.Commandor;
 import com.acme.edu.parser.reactors.CommandReactor;
@@ -35,7 +36,7 @@ public class Server {
                 executor.submit(() -> run(inputStream, outputStream));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ExceptionLogger.logException("Server stopped", e);
         }
     }
 
@@ -54,7 +55,7 @@ public class Server {
                 CommandReactor reactor = commandor.parse(clientMessage, user, observer);
                 reactor.react();
             } catch (Exception e) {
-                e.printStackTrace();
+                ExceptionLogger.logException("Cannot perform client action", e);
             }
         }
     }

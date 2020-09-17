@@ -2,8 +2,10 @@ package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
+
 import com.acme.edu.exception.SendMessageException;
-import com.acme.edu.parser.CommandParser;
+import com.acme.edu.parser.Commandor;
+import com.acme.edu.parser.reactors.CommandReactor;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -16,7 +18,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     private static final ChatObserver observer = new ChatObserver();
-    private static final CommandParser commandParser = new CommandParser();
+    private static final Commandor commandor = new Commandor();
 
     public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
@@ -49,8 +51,8 @@ public class Server {
         while (true) {
             try {
                 final String clientMessage = inputStream.readUTF();
-                commandParser.parse(clientMessage);
-                observer.notifyChatMembers(commandParser.getMessage());
+                CommandReactor reactor = commandor.parse(clientMessage, user, observer);
+                reactor.react();
             } catch (Exception e) {
                 e.printStackTrace();
             }

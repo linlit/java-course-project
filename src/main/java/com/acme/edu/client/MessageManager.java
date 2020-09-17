@@ -16,9 +16,7 @@ public class MessageManager {
         if (message.startsWith("/snd ")) {
             filterLen(message.substring(5));
             return decorate(message);
-        }
-        if (("/hist".equals(message)) || (("/exit".equals(message)))) return message;
-        throw new InvalidMessageException("Unknown command");
+        } return message;
     }
 
     private void filterLen(String message) throws InvalidMessageException {

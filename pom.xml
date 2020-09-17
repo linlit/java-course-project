@@ -3,7 +3,7 @@
 <modelVersion>4.0.0</modelVersion>
 
 <groupId>com.acme.edu</groupId>
-<artifactId>course-project</artifactId>
+<artifactId>team02</artifactId>
 <version>1.0-SNAPSHOT</version>
 <packaging>jar</packaging>
 
@@ -88,33 +88,6 @@
                 <execution>
                     <id>jacoco-site</id>
                     <phase>package</phase>
-                    <goals>
-                        <goal>report</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        <plugin>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-maven</artifactId>
-            <version>1.5.2</version>
-            <configuration>
-                <targetClasses>
-                    <param>demo.ooad.*</param>
-                </targetClasses>
-                <targetTests>
-                    <param>demo.ooad.*</param>
-                </targetTests>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>mutation-coverage</id>
-                    <goals>
-                        <goal>mutationCoverage</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>mutation-report</id>
                     <goals>
                         <goal>report</goal>
                     </goals>

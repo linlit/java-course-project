@@ -13,14 +13,14 @@ public class ChatObserver {
      * Adding new user to group chat and update listeners
      * @param client  new client
      */
-    void subscribeToChat(User client) {
+    public void subscribeToChat(User client) {
         chatMembers.add(client);
     };
 
     /*
      * Deleting customer from chat.
      */
-    void unsubscribeFromChat(User client) {
+    public void unsubscribeFromChat(User client) {
         client.unsubscribeFromChat();
         chatMembers.remove(client);
     };
@@ -28,7 +28,7 @@ public class ChatObserver {
     /*
      * Notify all users in the chat about updates.
      */
-    void notifyChatMembers(String message) {
+    public void notifyChatMembers(String message) {
         chatMembers.forEach(user -> user.notifyUser(message));
     };
 }

@@ -1,5 +1,8 @@
 package com.acme.edu.Server;
 
+import com.acme.edu.chat.ChatObserver;
+import com.acme.edu.chat.User;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,7 +16,8 @@ import java.util.concurrent.Executors;
                    new BufferedOutputStream(
                            clientConnection.getOutputStream()))*/
 
-
+// /exit
+//
 public class Server {
     private static ChatObserver observer = new ChatObserver();
     public static void main(String[] args) throws IOException {
@@ -28,9 +32,9 @@ public class Server {
         }
     }
     private static void run(Socket clientConnection) throws IOException {
+        MessageParser messageParser = new MessageParser();
         User user = new User(clientConnection);
-
-        observer.subscribe(user);
+        observer.subscribeToChat(user);
 
         final DataInputStream input = new DataInputStream(
                 new BufferedInputStream(
@@ -41,8 +45,10 @@ public class Server {
 
         while(true){
             String clientMessage = input.readUTF();
-            observer.
+            messageParser.parse(clientMessage);
+            observer.notifyChatMembers(clientMessage);
         }
     }
 }
+
 

@@ -19,11 +19,24 @@ public class Client {
                                 new BufferedOutputStream(connection.getOutputStream()));
                 Scanner in = new Scanner(System.in);
         ) {
+
+            Thread thread = new Thread(() -> {
+                while (true) {
+                    try {
+                        String h = input.readUTF();
+                        System.out.println(h);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+
             while (true) {
                 try {
                     sendMessage(in.nextLine(), out);
                 } catch (ClientException e) {
-                        e.printStackTrace();
+                    e.printStackTrace();
                     System.out.println("Try again");
                 }
             }
@@ -37,7 +50,7 @@ public class Client {
             String decoratedMessage = new MessageManager().getFilteredMessage(message);
             out.writeUTF(decoratedMessage);
             out.flush();
-        } catch (IOException|InvalidMessageException e) {
+        } catch (IOException | InvalidMessageException e) {
             e.printStackTrace();
             throw new ClientException("Couldn't send the message", e);
         }

@@ -21,6 +21,7 @@ public class User {
         try {
             if (this.isAuthenticated) {
                 this.outputStream.writeUTF(message);
+                outputStream.flush();
             }
         } catch (IOException e) {
             throw new SendMessageException("Cannot write a message to this stream", e);

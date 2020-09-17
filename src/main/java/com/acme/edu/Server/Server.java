@@ -35,18 +35,15 @@ public class Server {
         MessageParser messageParser = new MessageParser();
         User user = new User(clientConnection);
         observer.subscribeToChat(user);
-
-        final DataInputStream input = new DataInputStream(
-                new BufferedInputStream(
-                        clientConnection.getInputStream()));
-        final DataOutputStream out = new DataOutputStream(
-                new BufferedOutputStream(
-                        clientConnection.getOutputStream()));
-
         while(true){
-            String clientMessage = input.readUTF();
-            messageParser.parse(clientMessage);
-            observer.notifyChatMembers(clientMessage);
+            String clientMessage = user.waitMessage();
+            try {
+                messageParser.parse(clientMessage);
+                observer.notifyChatMembers(clientMessage);
+
+            } catch (MessageException e) {
+                user.notifyUser(e.getMessage());
+            }
         }
     }
 }

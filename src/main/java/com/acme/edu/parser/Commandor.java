@@ -9,8 +9,7 @@ import com.acme.edu.parser.reactors.*;
  * Creates command pattern for reacting on messages.
  */
 public class Commandor {
-    public CommandReactor parse(String clientMessage, User user, ChatObserver observer)
-            throws InvalidMessageException {
+    public CommandReactor parse(String clientMessage, User user, ChatObserver observer){
         String userName = user.getUserName();
 
         if (clientMessage.startsWith("/hist")) {
@@ -23,8 +22,9 @@ public class Commandor {
             return new ExitReactor(user, observer);
         } else if (clientMessage.startsWith("/chid")) {
             return new AuthReactor(clientMessage.split("/chid")[1], user);
-        } else {
-            throw new InvalidMessageException("Wrong format of message: " + clientMessage);
+        }
+        else {
+            return null; // we have no wrong _ format because of Client
         }
     }
 }

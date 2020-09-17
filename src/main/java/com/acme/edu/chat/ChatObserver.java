@@ -37,7 +37,6 @@ public class ChatObserver {
             cache.add(message);
             chatMembers.forEach(user -> {
                 try {
-
                     user.notifyUser(message);
                 } catch (SendMessageException e) {
                     e.printStackTrace();
@@ -45,7 +44,6 @@ public class ChatObserver {
             });
         }
     };
-
     public void preActions(User user) throws SendMessageException {
         this.subscribeToChat(user);
         this.loadHistory(user);

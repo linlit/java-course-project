@@ -6,6 +6,7 @@ import com.acme.edu.chat.User;
 import com.acme.edu.exception.SendMessageException;
 import com.acme.edu.parser.Commandor;
 import com.acme.edu.parser.reactors.CommandReactor;
+import com.acme.edu.parser.reactors.ExitReactor;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -49,12 +50,18 @@ public class Server {
         }
 
         while (user.isUserAlive()) {
+            String clientMessage = "";
             try {
-                final String clientMessage = inputStream.readUTF();
+                clientMessage = inputStream.readUTF();
                 CommandReactor reactor = commandor.parse(clientMessage, user, observer);
                 reactor.react();
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+            catch (IOException e) {
+                System.out.println("User "+ user.getUserName() +" has quiet");
+                new ExitReactor(user, observer).react();
+            }
+            catch (SendMessageException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

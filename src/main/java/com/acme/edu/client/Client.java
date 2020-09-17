@@ -25,10 +25,12 @@ public class Client {
                 Scanner in = new Scanner(System.in)
         ) {
             Thread thread = new Thread(() -> {
-                while(true) {
+                while (true) {
                     try {
                         String readLine = input.readUTF();
+
                         System.out.println(readLine);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -37,11 +39,11 @@ public class Client {
             thread.setDaemon(true);
             thread.start();
 
-            while(true) {
+            while (true) {
                 try {
                     String currentLine = in.nextLine();
                     sendMessage(currentLine, out);
-                    if(manager.isExitCommand(currentLine)) {
+                    if (manager.isExitCommand(currentLine)) {
                         //end main
                         return;
                     }

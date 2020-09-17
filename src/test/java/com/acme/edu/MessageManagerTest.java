@@ -1,6 +1,6 @@
 package com.acme.edu;
 
-import com.acme.edu.client.MessageManager;
+import com.acme.edu.client.MessagePreprocessor;
 import com.acme.edu.exception.InvalidMessageException;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
@@ -21,20 +21,20 @@ public class MessageManagerTest implements SysoutCaptureAndAssertionAbility {
 
     @Test(expected = InvalidMessageException.class)
     public void shouldThrowInvalidMessageExceptionWhenWrongCommand() throws InvalidMessageException {
-        MessageManager manager = new MessageManager();
+        MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/histhdbhdbh");
 
     }
 
     @Test()
     public void shouldDecorateSendMessageWhenSendCommandSND() throws InvalidMessageException {
-        MessageManager manager = new MessageManager();
+        MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/snd pussy")).contains("/snd", "2020", "pussy");
     }
 
     @Test()
     public void shouldSendMessageExitORHistWithoutChange() throws InvalidMessageException {
-        MessageManager manager = new MessageManager();
+        MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
     }

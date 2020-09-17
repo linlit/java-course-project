@@ -2,6 +2,7 @@ package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
+import com.acme.edu.exception.SendMessageException;
 import com.acme.edu.parser.CommandParser;
 
 import java.io.*;
@@ -38,7 +39,12 @@ public class Server {
 
     private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
-        observer.subscribeToChat(user);
+
+        try {
+            observer.preActions(user);
+        } catch (SendMessageException e) {
+            e.printStackTrace();
+        }
 
         while (true) {
             try {

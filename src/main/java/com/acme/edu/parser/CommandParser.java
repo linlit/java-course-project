@@ -1,12 +1,26 @@
 package com.acme.edu.parser;
 
-public class CommandParser {
+import com.acme.edu.exception.InvalidMessageException;
 
-    public static String parse(String message) {
-        String parsedMessage;
-        if (message.startsWith("/snd ")) parsedMessage = message.substring(5);
-        if (message.startsWith("/hist")) parsedMessage = message;
-        // TODO: /quite - > exseption? or state?¡
-        return "";
+public class CommandParser {
+    static private MessageType messageType;
+    static private String message;
+
+    public void parse(String clientMessage) throws InvalidMessageException {
+        if (clientMessage.trim().equals("/start")) {
+            messageType = MessageType.SUBSCRIBE;
+            message = "Welcome to the chat!";
+        } else if (clientMessage.startsWith("/hist")) {
+            messageType = MessageType.HISTORY;
+            message = "Here is the chat history!";
+        } else if (clientMessage.startsWith("/snd")) {
+            messageType = MessageType.SEND;
+            message = clientMessage.split("/snd")[1];
+        } else if (clientMessage.trim().equals("/exit")) {
+            messageType = MessageType.UNSUBSCRIBE;
+            message = "We will be glad to see you again!";
+        } else {
+            throw new InvalidMessageException("wrong format of message: " + clientMessage);
+        }
     }
 }

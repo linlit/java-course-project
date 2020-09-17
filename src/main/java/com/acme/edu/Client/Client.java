@@ -8,7 +8,7 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) {
         try (
-                final Socket connection = new Socket(args[0], Integer.parseInt(args[1]));
+                final Socket connection = new Socket("127.0.0.1", 10_000);
                 final DataInputStream input =
                         new DataInputStream(
                                 new BufferedInputStream(connection.getInputStream()));
@@ -38,3 +38,8 @@ public class Client {
 sin
 /snd
 // TODO flush
+//TODO valid?
+// /send cat -> ??? -> /send <time> cat
+// /exit ->  (return main)
+// /hist ->
+//

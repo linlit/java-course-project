@@ -15,9 +15,9 @@ import java.util.concurrent.Executors;
 
 
 public class Server {
+    private static ChatObserver observer = new ChatObserver();
     public static void main(String[] args) throws IOException {
-        try (final ServerSocket connectionPortListener = new ServerSocket(10_000);
-           ){
+        try (final ServerSocket connectionPortListener = new ServerSocket(10_000);){
             ExecutorService executor =  Executors.newFixedThreadPool(1000);
             while(true){
                 final Socket clientConnection = connectionPortListener.accept();
@@ -27,8 +27,22 @@ public class Server {
             e.printStackTrace();
         }
     }
-    private static void run(Socket clientConnection){
+    private static void run(Socket clientConnection) throws IOException {
+        User user = new User(clientConnection);
 
+        observer.subscribe(user);
+
+        final DataInputStream input = new DataInputStream(
+                new BufferedInputStream(
+                        clientConnection.getInputStream()));
+        final DataOutputStream out = new DataOutputStream(
+                new BufferedOutputStream(
+                        clientConnection.getOutputStream()));
+
+        while(true){
+            String clientMessage = input.readUTF();
+            observer.
+        }
     }
 }
 

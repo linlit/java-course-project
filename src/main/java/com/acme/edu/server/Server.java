@@ -3,8 +3,8 @@ package com.acme.edu.server;
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 
-import com.acme.edu.exception.SendMessageException;
-import com.acme.edu.parser.Commandor;
+import com.acme.edu.exception.ExceptionLogger;
+import com.acme.edu.parser.MessageProcessor;
 import com.acme.edu.parser.reactors.CommandReactor;
 import com.acme.edu.parser.reactors.ExitReactor;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     private static final ChatObserver observer = new ChatObserver();
-    private static final Commandor commandor = new Commandor();
+    private static final MessageProcessor commandor = new MessageProcessor();
 
     public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
@@ -36,18 +36,13 @@ public class Server {
                 executor.submit(() -> run(inputStream, outputStream));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ExceptionLogger.logException("Server stopped", e);
         }
     }
 
     private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
-
-        try {
-            observer.preActions(user);
-        } catch (SendMessageException e) {
-            e.printStackTrace();
-        }
+        observer.subscribeToChat(user);
 
         while (user.isUserAlive()) {
             String clientMessage = "";
@@ -61,7 +56,7 @@ public class Server {
                 new ExitReactor(user, observer).react();
             }
             catch (SendMessageException e) {
-                System.out.println(e.getMessage());
+                ExceptionLogger.logException("Cannot perform client action", e);
             }
         }
     }

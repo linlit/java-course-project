@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Client-side logic of application
  */
 public class Client {
-    private static final MessageManager manager = new com.acme.edu.client.MessageManager();
+    private static final MessagePreprocessor manager = new MessagePreprocessor();
 
     public static void main(String[] args) {
         try (
@@ -34,13 +34,14 @@ public class Client {
                     }
                 }
             });
+            thread.setDaemon(true);
             thread.start();
 
             while(true) {
                 try {
                     String currentLine = in.nextLine();
                     sendMessage(currentLine, out);
-                    if(MessageManager.isExitCommand(currentLine)) {
+                    if (manager.isExitCommand(currentLine)) {
                         return;
                     }
                 } catch (ClientException e) {

@@ -1,5 +1,6 @@
 package com.acme.edu.chat;
 
+import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.SendMessageException;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ChatObserver {
                 try {
                     user.notifyUser(message);
                 } catch (SendMessageException e) {
-                    e.printStackTrace();
+                    ExceptionLogger.logException("Connit nitify other users", e);
                 }
             });
         }

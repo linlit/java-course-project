@@ -1,13 +1,16 @@
 package com.acme.edu.chat;
 
+import com.acme.edu.exception.SendMessageException;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /*
  * Interface that emulates pattern Observer for chat activities.
  */
 public class ChatObserver {
-    static List<User> chatMembers = new ArrayList<>(1000);
+    static final Collection<User> chatMembers = new ConcurrentLinkedQueue<>(new ArrayList<>(1000));
 
     /*
      * Adding new user to group chat and update listeners
@@ -29,6 +32,14 @@ public class ChatObserver {
      * Notify all users in the chat about updates.
      */
     public void notifyChatMembers(String message) {
-        chatMembers.forEach(user -> user.notifyUser(message));
+        synchronized (chatMembers) {
+            chatMembers.forEach(user -> {
+                try {
+                    user.notifyUser(message);
+                } catch (SendMessageException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     };
 }

@@ -1,11 +1,12 @@
-package com.acme.edu.Client;
+package com.acme.edu.client;
 
-import com.acme.edu.exception.ClientException;
 import com.acme.edu.exception.InvalidMessageException;
-import com.acme.edu.parser.CommandParser;
 
 import java.time.LocalDateTime;
 
+/*
+ * Client-side pre-processing message
+ */
 public class MessageManager {
     private String decorate(String message) {
         return "/snd " + LocalDateTime.now() + " " + message.substring(5);
@@ -23,10 +24,4 @@ public class MessageManager {
     private void filterLen(String message) throws InvalidMessageException {
         if (message.length() > 150) throw new InvalidMessageException("Message length is over 150 characters");
     }
-
-
 }
-
-
-
-// TODO spec if over -> ? cut or rewrite

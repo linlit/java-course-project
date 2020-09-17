@@ -1,4 +1,4 @@
-package com.acme.edu.Server;
+package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;

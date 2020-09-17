@@ -1,4 +1,4 @@
-package com.acme.edu.Client;
+package com.acme.edu.client;
 
 import com.acme.edu.exception.ClientException;
 import com.acme.edu.exception.InvalidMessageException;
@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+/*
+ * Client-side logic of application
+ */
 public class Client {
     public static void main(String[] args) {
         try (

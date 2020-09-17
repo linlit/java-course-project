@@ -44,7 +44,7 @@ public class Server {
             try {
                 final String clientMessage = inputStream.readUTF();
                 commandParser.parse(clientMessage);
-                observer.notifyChatMembers(clientMessage);
+                observer.notifyChatMembers(commandParser.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }

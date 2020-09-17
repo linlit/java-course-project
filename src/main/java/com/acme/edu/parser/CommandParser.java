@@ -3,8 +3,8 @@ package com.acme.edu.parser;
 import com.acme.edu.exception.InvalidMessageException;
 
 public class CommandParser {
-    static private MessageType messageType;
-    static private String message;
+     private MessageType messageType;
+     private String message;
 
     public void parse(String clientMessage) throws InvalidMessageException {
         if (clientMessage.trim().equals("/start")) {
@@ -22,5 +22,13 @@ public class CommandParser {
         } else {
             throw new InvalidMessageException("wrong format of message: " + clientMessage);
         }
+    }
+
+    public  MessageType getMessageType() {
+        return messageType;
+    }
+
+    public  String getMessage() {
+        return message;
     }
 }

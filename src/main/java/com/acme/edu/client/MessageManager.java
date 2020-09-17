@@ -36,6 +36,6 @@ public class MessageManager {
     }
 
     public static boolean isExitCommand(String command) {
-        return "/exit".equals(command);
+        return "/exit".trim().equals(command);
     }
 }

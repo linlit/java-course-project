@@ -26,6 +26,7 @@ public class ChatObserver {
      */
     public void unsubscribeFromChat(User client) {
         chatMembers.remove(client);
+        client.setUserDead();
     };
 
     /*

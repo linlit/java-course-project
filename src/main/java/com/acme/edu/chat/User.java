@@ -12,9 +12,18 @@ import java.io.IOException;
 public class User {
     private String userName;
     private final DataOutputStream outputStream;
-
+    private volatile  boolean isUserAlive;
     public User(DataOutputStream out) {
         this.outputStream = out;
+        this.isUserAlive = true;
+    }
+
+    public void setUserDead() {
+        this.isUserAlive = false;
+    }
+
+    public boolean isUserAlive() {
+        return isUserAlive;
     }
 
     public void setUserName(String userName) {

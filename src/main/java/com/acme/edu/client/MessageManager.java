@@ -24,6 +24,9 @@ public class MessageManager {
             filterLen(message.substring(5));
             return decorate(message);
         }
+        if (message.startsWith("/chid ")) {
+            return message;
+        }
         if (("/hist".equals(message))) {
             return message;
         }

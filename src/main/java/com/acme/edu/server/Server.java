@@ -48,7 +48,7 @@ public class Server {
             e.printStackTrace();
         }
 
-        while (true) {
+        while (user.isUserAlive()) {
             try {
                 final String clientMessage = inputStream.readUTF();
                 CommandReactor reactor = commandor.parse(clientMessage, user, observer);

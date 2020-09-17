@@ -34,6 +34,7 @@ public class Client {
                     }
                 }
             });
+            thread.setDaemon(true);
             thread.start();
 
             while(true) {
@@ -41,6 +42,7 @@ public class Client {
                     String currentLine = in.nextLine();
                     sendMessage(currentLine, out);
                     if(manager.isExitCommand(currentLine)) {
+                        //end main
                         return;
                     }
                 } catch (ClientException e) {

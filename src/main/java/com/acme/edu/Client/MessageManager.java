@@ -19,7 +19,7 @@ public class MessageManager {
     }
 
     public void filterLen(String message) throws InvalidMessageException {
-        if (message.length() > 150) throw new InvalidMessageException("Message length is over 150 characters");
+        if (message.length() > 150) throw new InvalidMessageException("Message length is over 150 characters";
     }
 
 

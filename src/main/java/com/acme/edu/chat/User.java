@@ -1,35 +1,32 @@
 package com.acme.edu.chat;
 
+import com.acme.edu.exception.ConnectionFailedException;
 import com.acme.edu.exception.SendMessageException;
 
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
 /*
  * Listener pattern for a chat member.
+ * Supports current auth status and connection.
  */
 public class User {
-    private boolean isAuthenticated;
-    private final DataOutputStream userOutputStream;
+    volatile private boolean isAuthenticated;
+//    private final DataInputStream inputStream;
+    private final DataOutputStream outputStream;
 
-    public User(Socket socket) throws SendMessageException {
-        try {
-            this.userOutputStream = new DataOutputStream(
-                    new BufferedOutputStream(
-                            socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new SendMessageException("Cannot create output stream", e);
-        }
-
+    public User(DataOutputStream out) {
+//        this.inputStream = in;
+        this.outputStream = out;
         this.isAuthenticated = true;
     }
-
     void notifyUser(String message) throws SendMessageException {
         try {
             if (this.isAuthenticated) {
-                this.userOutputStream.writeUTF(message);
+                this.outputStream.writeUTF(message);
             }
         } catch (IOException e) {
             throw new SendMessageException("Cannot write a message to this stream", e);

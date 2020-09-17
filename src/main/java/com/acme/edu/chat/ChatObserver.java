@@ -36,6 +36,7 @@ public class ChatObserver {
             cache.add(message);
             chatMembers.forEach(user -> {
                 try {
+
                     user.notifyUser(message);
                 } catch (SendMessageException e) {
                     e.printStackTrace();

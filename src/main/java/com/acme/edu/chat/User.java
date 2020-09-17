@@ -21,11 +21,12 @@ public class User {
         this.userName = userName;
     }
 
+    public String getUserName() {
+        return this.userName;
+    }
+
     public void notifyUser(String message) throws SendMessageException {
         try {
-            if (this.userName != null) {
-                this.outputStream.writeUTF(this.userName + ": ");
-            }
             this.outputStream.writeUTF(message);
             outputStream.flush();
         } catch (IOException e) {

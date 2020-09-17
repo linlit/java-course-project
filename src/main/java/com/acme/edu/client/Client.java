@@ -1,7 +1,6 @@
 package com.acme.edu.client;
 
 import com.acme.edu.exception.ClientException;
-import com.acme.edu.exception.ExitChatException;
 import com.acme.edu.exception.InvalidMessageException;
 
 import java.io.*;
@@ -12,7 +11,7 @@ import java.util.Scanner;
  * Client-side logic of application
  */
 public class Client {
-    private static MessageManager manager = new MessageManager();
+    private static MessageManager manager = new com.acme.edu.client.MessageManager();
 
     public static void main(String[] args) {
         try (
@@ -23,7 +22,7 @@ public class Client {
                 final DataOutputStream out =
                         new DataOutputStream(
                                 new BufferedOutputStream(connection.getOutputStream()));
-                Scanner in = new Scanner(System.in);
+                Scanner in = new Scanner(System.in)
         ) {
             Thread thread = new Thread(() -> {
                 while(true) {

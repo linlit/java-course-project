@@ -1,6 +1,5 @@
 package com.acme.edu.client;
 
-import com.acme.edu.exception.ExitChatException;
 import com.acme.edu.exception.InvalidMessageException;
 
 import java.time.LocalDateTime;

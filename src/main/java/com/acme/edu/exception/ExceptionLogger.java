@@ -6,23 +6,26 @@ package com.acme.edu.exception;
 public class ExceptionLogger {
     static final StringBuilder exceptionsHistory = new StringBuilder();
 
-    static public void logExceptionQuiet(String message, Exception e) {
+    private ExceptionLogger(){
+
+    }
+    public static void logExceptionQuiet(String message, Exception e) {
         synchronized (exceptionsHistory) {
             exceptionsHistory.append(message).append(e);
         }
     }
 
-    static public void logExceptionWithError(String message, Exception e) {
+    public static void logExceptionWithError(String message, Exception e) {
         logExceptionQuiet(message, e);
         System.err.println(message);
     }
 
-    static public void logExceptionWithInfo(String message, Exception e) {
+    public static void logExceptionWithInfo(String message, Exception e) {
         logExceptionQuiet(message, e);
         System.out.println(message);
     }
 
-    static public String getExceptionLog() {
+    public static String getExceptionLog() {
         return exceptionsHistory.toString();
     }
 }

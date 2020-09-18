@@ -21,12 +21,13 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     private static final ChatObserver observer = new ChatObserver();
-    private static final MessageProcessor commandor = new MessageProcessor();
+    private static final MessageProcessor messageProcessor = new MessageProcessor();
+
     public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
             ExecutorService executor =  Executors.newFixedThreadPool(1000);
 
-            while (true) {
+            while (!connectionPortListener.isClosed()) {
                 final Socket clientConnection = connectionPortListener.accept();
                 final DataInputStream inputStream = new DataInputStream(
                         new BufferedInputStream(
@@ -45,18 +46,16 @@ public class Server {
         User user = new User(outputStream);
         observer.subscribeToChat(user);
 
-        while (user.isUserAlive()) {
+        while (user.getIsAuthenticated()) {
             String clientMessage = "";
             try {
                 clientMessage = inputStream.readUTF();
-                CommandReactor reactor = commandor.parse(clientMessage, user, observer);
+                CommandReactor reactor = messageProcessor.parse(clientMessage, user, observer);
                 reactor.react();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 new ExitReactor(user, observer).react();
-            }
-            catch (InvalidMessageException| SendMessageException e) {
-                ExceptionLogger.logException("Cannot perform client action", e);
+            } catch (InvalidMessageException| SendMessageException e) {
+                ExceptionLogger.logException("Cannot perform client action for client " + user, e);
             }
         }
     }

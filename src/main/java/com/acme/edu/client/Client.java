@@ -15,6 +15,7 @@ public class Client {
     private static final MessagePreprocessor manager = new MessagePreprocessor();
     public static final String SERVER_IS_NOT_AVAILABLE = "Server is not available.";
     private static boolean serverAlive = true;
+
     public static void main(String[] args) {
         try (
                 final Socket connection = new Socket(args[0], Integer.parseInt(args[1]));

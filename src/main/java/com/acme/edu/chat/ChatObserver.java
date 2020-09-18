@@ -23,7 +23,6 @@ public class ChatObserver {
             this.chatMembers.computeIfAbsent(roomId, k -> new HashSet<>()).add(client);
             client.setRoomId(roomId);
             client.setIsAuthenticated(true);
-            System.out.println(chatMembers);
         }
     }
 
@@ -38,7 +37,6 @@ public class ChatObserver {
     public void unsubscribeFromRoom(User client) {
         synchronized (this.chatMembers) {
             this.chatMembers.get(client.getRoomId()).remove(client);
-            System.out.println(chatMembers);
         }
     }
 
@@ -47,8 +45,7 @@ public class ChatObserver {
      */
     public void notifyChatMembers(String message, String roomId) {
         synchronized (this.chatMembers) {
-            this.cache.add(message);
-            System.out.println(this.chatMembers.get(roomId));
+            this.cache.add(message, roomId);
             this.chatMembers.get(roomId).forEach(user -> {
                 try {
                     user.notifyUser(message);
@@ -63,6 +60,6 @@ public class ChatObserver {
      * Load all chat history and notifies user who ordered it.
      */
     public void loadHistory(User user) throws SendMessageException {
-        user.notifyUser(this.cache.getHistoryChatCache());
+        user.notifyUser(this.cache.getHistoryChatCache(user.getRoomId()));
     }
 }

@@ -24,7 +24,6 @@ public class SendReactor implements CommandReactor {
 
     @Override
     public void react() {
-        System.out.println("get snd in " + this.user.getRoomId());
         observer.notifyChatMembers(this.sendMessage, this.user.getRoomId());
     }
 }

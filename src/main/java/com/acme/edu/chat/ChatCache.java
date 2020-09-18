@@ -11,18 +11,21 @@ import static java.lang.System.lineSeparator;
  * Class for logging chat messages to specific file
  */
 public class ChatCache {
-    private static final String chatLogPath = "log.txt";
+    private String getLogPath(String roomId) {
+        String chatLogPath = "logs/";
+        return chatLogPath + "room_" + roomId + ".txt";
+    }
 
     /**
      * Adding new message to chat log file.
      * @param message String to add to log
      */
-    public void add(String message) {
+    public void add(String message, String roomId) {
         try (BufferedWriter bufferedWriter =
                      new BufferedWriter(
                              new OutputStreamWriter(
                                      new BufferedOutputStream(
-                                             new FileOutputStream(chatLogPath, true))))) {
+                                             new FileOutputStream(getLogPath(roomId), true))))) {
             bufferedWriter.write(message);
             bufferedWriter.newLine();
         }
@@ -34,12 +37,12 @@ public class ChatCache {
     /**
      * Loading chat history from file.
      */
-    public String getHistoryChatCache() {
+    public String getHistoryChatCache(String roomId) {
         try (BufferedReader br =
                      new BufferedReader(
                              new InputStreamReader(
                                      new BufferedInputStream(
-                                             new FileInputStream(chatLogPath)), StandardCharsets.UTF_8))) {
+                                             new FileInputStream(getLogPath(roomId))), StandardCharsets.UTF_8))) {
             String readLine;
             StringBuilder historyChatCache = new StringBuilder();
             while ((readLine = br.readLine()) != null) {

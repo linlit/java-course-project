@@ -2,7 +2,6 @@ package com.acme.edu.client;
 
 import com.acme.edu.exception.ClientException;
 import com.acme.edu.exception.ExceptionLogger;
-import com.acme.edu.exception.InvalidMessageException;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,8 +29,7 @@ public class Client {
             startServerListener(input);
             startClientListener(in, output);
         } catch (IOException e) {
-            ExceptionLogger.logException(SERVER_IS_NOT_AVAILABLE, e);
-            System.err.println(SERVER_IS_NOT_AVAILABLE);
+            ExceptionLogger.logExceptionWithError(SERVER_IS_NOT_AVAILABLE, e);
         }
     }
 
@@ -44,8 +42,7 @@ public class Client {
                 }
                 sendMessage(currentLine, output);
             } catch (ClientException e) {
-                ExceptionLogger.logException("Incorrect message", e);
-                System.out.println("Please, try again!");
+                ExceptionLogger.logExceptionWithInfo("Incorrect message. Please, try again!", e);
             }
         }
     }
@@ -57,8 +54,7 @@ public class Client {
                     String readLine = input.readUTF();
                     System.out.println(readLine);
                 } catch (IOException e) {
-                    ExceptionLogger.logException(SERVER_IS_NOT_AVAILABLE, e);
-                    System.err.println(SERVER_IS_NOT_AVAILABLE);
+                    ExceptionLogger.logExceptionWithError(SERVER_IS_NOT_AVAILABLE, e);
                     serverAlive = false;
                 }
             }
@@ -72,7 +68,7 @@ public class Client {
             String decoratedMessage = manager.getFilteredMessage(message);
             out.writeUTF(decoratedMessage);
             out.flush();
-        } catch (IOException | InvalidMessageException e) {
+        } catch (IOException e) {
             throw new ClientException();
         }
     }

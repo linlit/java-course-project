@@ -50,7 +50,10 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
     @Test(expected = InvalidMessageException.class)
     public void shouldNotifyWhenMessageLengthOverThan150() {
         MessagePreprocessor manager = new MessagePreprocessor();
-        manager.getFilteredMessage("/snd qwertyuiopqwertyuiocfcgcvfgcvgjfcgffgcjvggcghcghcgfhcfgcgpsdfghjklasdfghjkasdfghjksdfghjksdfghjklsdfvgbhnsdfvbnxcvbndfghjsdfgbhncvbghnfcyscgcfgcvfgcfgcfgcfgcfgcgcjcjchgjbbkkjkkjhkggvfcvghbjfvgbhjnkcdfgvhbjdcfg");
+        manager.getFilteredMessage("/snd qwertyuiopqwertyuiocfcgcvfgcvgjf" +
+                "cgffgcjvggcghcghcgfhcfgcgpsdfghjklasdfghjkasdfghjksdfghjks" +
+                "dfghjklsdfvgbhnsdfvbnxcvbndfghjsdfgbhncvbghnfcyscgcfgcvfgcf" +
+                "gcfgcfgcfgcgcjcjchgjbbkkjkkjhkggvfcvghbjfvgbhjnkcdfgvhbjdcfg");
     }
 
     @Test()

@@ -38,4 +38,28 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
     }
+
+    @Test()
+    public void shouldSendMessageExitORHistORChidWithoutChange() {
+        MessagePreprocessor manager = new MessagePreprocessor();
+        Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
+        Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
+        Assertions.assertThat(manager.getFilteredMessage("/chid name")).isEqualTo("/chid name");
+    }
+
+    @Test(expected = InvalidMessageException.class)
+    public void shouldNotifyWhenMessageLengthOverThan150() {
+        MessagePreprocessor manager = new MessagePreprocessor();
+        manager.getFilteredMessage("/snd qwertyuiopqwertyuiocfcgcvfgcvgjf" +
+                "cgffgcjvggcghcghcgfhcfgcgpsdfghjklasdfghjkasdfghjksdfghjks" +
+                "dfghjklsdfvgbhnsdfvbnxcvbndfghjsdfgbhncvbghnfcyscgcfgcvfgcf" +
+                "gcfgcfgcfgcgcjcjchgjbbkkjkkjhkggvfcvghbjfvgbhjnkcdfgvhbjdcfg");
+    }
+
+    @Test()
+    public void shouldDifferCommandFromOther() {
+        MessagePreprocessor manager = new MessagePreprocessor();
+        Assertions.assertThat(manager.isExitCommand("/snd g")).isFalse();
+        Assertions.assertThat(manager.isExitCommand("/exit")).isTrue();
+    }
 }

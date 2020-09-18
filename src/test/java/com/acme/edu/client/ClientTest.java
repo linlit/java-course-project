@@ -12,10 +12,11 @@ import org.junit.Test;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 
-public class ClientTest extends Client implements SysoutCaptureAndAssertionAbility {
+public class ClientTest implements SysoutCaptureAndAssertionAbility {
 
     @Test(expected = ClientException.class)
     public void shouldThrowClientExceptionWhenIllegalCommandCalled() throws ClientException, IOException {
@@ -32,13 +33,5 @@ public class ClientTest extends Client implements SysoutCaptureAndAssertionAbili
 
         verify(outMock, times(1)).flush();
     }
-
-    @Test
-    public void shouldAskSendMessageAgainWhen() {
-
-    }
-
-    @Test
-    public void should
 }
 

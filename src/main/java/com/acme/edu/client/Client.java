@@ -36,6 +36,7 @@ public class Client {
     private static void startClientListener(Scanner in, DataOutputStream output) {
         while (serverAlive) {
             try {
+                System.out.println("fjfjf");
                 String currentLine = in.nextLine();
                 if (manager.isExitCommand(currentLine)) {
                     return;
@@ -63,7 +64,7 @@ public class Client {
         thread.start();
     }
 
-    protected static void sendMessage(String message, DataOutputStream out) throws ClientException {
+    static void sendMessage(String message, DataOutputStream out) throws ClientException {
         try {
             String decoratedMessage = manager.getFilteredMessage(message);
             out.writeUTF(decoratedMessage);

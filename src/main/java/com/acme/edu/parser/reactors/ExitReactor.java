@@ -17,6 +17,7 @@ public class ExitReactor implements CommandReactor {
 
     @Override
     public void react() {
+        System.out.println("User "+ user.getUserName() +" has quiet");
         this.observer.unsubscribeFromChat(this.user);
     }
 }

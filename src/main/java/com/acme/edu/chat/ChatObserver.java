@@ -45,7 +45,6 @@ public class ChatObserver {
             });
         }
     };
-
     public void preActions(User user) throws SendMessageException {
         this.subscribeToChat(user);
         this.loadHistory(user);

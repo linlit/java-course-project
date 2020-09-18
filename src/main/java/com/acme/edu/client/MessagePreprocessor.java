@@ -15,8 +15,9 @@ import java.util.Date;
 
 public class MessagePreprocessor {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime now;
     private String decorate(String message, String delta) {
+        now = LocalDateTime.now();
         return delta + dtf.format(now) + " " + message.substring(delta.length());
     }
 

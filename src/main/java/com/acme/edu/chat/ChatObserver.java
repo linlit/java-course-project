@@ -101,7 +101,7 @@ public class ChatObserver {
         try {
             user.notifyUser(message);
         } catch (SendMessageException e) {
-            ExceptionLogger.logException("Cannot notify user: " + user, e);
+            ExceptionLogger.logExceptionWithError("Cannot notify user: " + user, e);
         }
     }
 

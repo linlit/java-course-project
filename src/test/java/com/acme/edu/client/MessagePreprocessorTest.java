@@ -1,13 +1,13 @@
-package com.acme.edu;
+package com.acme.edu.client;
 
-import com.acme.edu.client.MessagePreprocessor;
+import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import com.acme.edu.exception.InvalidMessageException;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MessageManagerTest implements SysoutCaptureAndAssertionAbility {
+public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility {
     @Before
     public void setUpSystemOut() {
         resetOut();
@@ -29,7 +29,7 @@ public class MessageManagerTest implements SysoutCaptureAndAssertionAbility {
     @Test()
     public void shouldDecorateSendMessageWhenSendCommandSND() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
-        Assertions.assertThat(manager.getFilteredMessage("/snd pussy")).contains("/snd", "2020", "pussy");
+        Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "2020", "cat");
     }
 
     @Test()

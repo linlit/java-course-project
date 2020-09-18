@@ -1,4 +1,4 @@
-package com.acme.edu.parser.reactors;
+package com.acme.edu.chat.reactors;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
@@ -14,7 +14,7 @@ public class HistoryReactor implements CommandReactor {
     /**
      * Creates reactor for show history action.
      * @param user User that wants to see history
-     * @param observer ChatObserver for current chat
+     * @param observer ChatObserver for all rooms
      */
     public HistoryReactor(User user, ChatObserver observer) {
         this.user = user;

@@ -9,4 +9,4 @@ buildNumber.properties
 javajunior.iml
 .idea
 .DS_Store
-log.txt
+/logs

@@ -4,7 +4,7 @@ package com.acme.edu.exception;
  * Custom exceptions logger, supports saving to exception history and getting all the history.
  */
 public class ExceptionLogger {
-    static private final StringBuffer exceptionsHistory = new StringBuffer();
+    static final StringBuilder exceptionsHistory = new StringBuilder();
 
     static public void logException(String message, Exception e) {
         synchronized (exceptionsHistory) {

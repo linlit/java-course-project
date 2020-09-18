@@ -1,4 +1,4 @@
-package com.acme.edu.parser.reactors;
+package com.acme.edu.chat.reactors;
 
 import com.acme.edu.chat.User;
 

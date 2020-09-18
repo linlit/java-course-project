@@ -1,14 +1,17 @@
-package com.acme.edu.parser;
+package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 import com.acme.edu.exception.InvalidMessageException;
-import com.acme.edu.parser.reactors.*;
+import com.acme.edu.chat.reactors.*;
 
 /**
  * Creates command pattern for reacting on messages.
+ * @see User
+ * @see ChatObserver
  */
 public class MessageProcessor {
+
     /**
      * Parses user message and decides which Command Reactor should be called.
      *
@@ -21,14 +24,16 @@ public class MessageProcessor {
     public CommandReactor parse(String message, User user, ChatObserver observer) throws InvalidMessageException {
         if (message.startsWith("/hist")) {
             return new HistoryReactor(user, observer);
-        } else if (message.startsWith("/snd")) {
+        } else if (message.startsWith("/snd ")) {
             String userName = user.getUserName();
-            String preparedMessage = (userName != null ? userName + ": " : "") + message.split("/snd")[1];
-            return new SendReactor(preparedMessage, observer);
+            String preparedMessage = (userName != null ? userName + ": " : "") + message.split("/snd ")[1];
+            return new SendToAllReactor(preparedMessage, observer, user);
         } else if (message.trim().equals("/exit")) {
             return new ExitReactor(user, observer);
-        } else if (message.startsWith("/chid")) {
-            return new AuthenticationReactor(message.split("/chid")[1], user);
+        } else if (message.startsWith("/chid ")) {
+            return new AuthenticationReactor(message.split("/chid ")[1], user);
+        } else if (message.startsWith("/chroom ")) {
+            return new ChangeRoomReactor(message.split("/chroom ")[1], observer, user);
         } else {
             throw new InvalidMessageException("Wrong format of message: " + message);
         }

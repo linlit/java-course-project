@@ -21,8 +21,7 @@ public class Server {
     private static final ChatObserver observer = new ChatObserver();
     private static final MessageProcessor messageProcessor = new MessageProcessor();
 
-    public static void main(final String[] args) throws Exception {
-        sanitizeArgs(args);
+    public static void main(String[] args){
         try (final ServerSocket connectionPortListener = new ServerSocket(Integer.parseInt(args[0]))) {
             final ExecutorService executor = Executors.newFixedThreadPool(1000);
 
@@ -39,12 +38,6 @@ public class Server {
         } catch (IOException e) {
             ExceptionLogger.logExceptionQuiet("Server stopped", e);
         }
-    }
-
-    private static void sanitizeArgs(String[] args) throws Exception {
-        if (args.length == 0) return;
-        if (args[0].length() < 12) return;
-        throw new Exception("Couldn`t verify input arguments");
     }
 
     public static void run(DataInputStream inputStream, DataOutputStream outputStream) {

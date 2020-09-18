@@ -4,6 +4,8 @@ import com.acme.edu.exception.ExceptionLogger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static java.lang.System.lineSeparator;
 
@@ -11,6 +13,14 @@ import static java.lang.System.lineSeparator;
  * Class for logging chat messages to specific file
  */
 public class ChatCache {
+    public ChatCache() {
+        try {
+            Files.createDirectory(Paths.get("logs/"));
+        } catch (IOException e) {
+            ExceptionLogger.logExceptionQuiet("Cannot create log directory", e);
+        }
+    }
+
     private String getLogPath(String roomId) {
         String chatLogPath = "logs/";
         return chatLogPath + "room_" + roomId + ".log";

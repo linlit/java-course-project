@@ -21,7 +21,7 @@ public class Server {
     private static final ChatObserver observer = new ChatObserver();
     private static final MessageProcessor messageProcessor = new MessageProcessor();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(Integer.parseInt(args[0]))) {
             final ExecutorService executor = Executors.newFixedThreadPool(1000);
 

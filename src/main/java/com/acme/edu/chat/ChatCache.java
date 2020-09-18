@@ -28,6 +28,7 @@ public class ChatCache {
 
     /**
      * Adding new message to chat log file.
+     *
      * @param message String to add to log
      */
     public void add(String message, String roomId) {
@@ -38,8 +39,7 @@ public class ChatCache {
                                              new FileOutputStream(getLogPath(roomId), true))))) {
             bufferedWriter.write(message);
             bufferedWriter.newLine();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ExceptionLogger.logExceptionQuiet("Cannot save this message to chat log file", e);
         }
     }

@@ -6,9 +6,10 @@ package com.acme.edu.exception;
 public class ExceptionLogger {
     static final StringBuilder exceptionsHistory = new StringBuilder();
 
-    private ExceptionLogger(){
+    private ExceptionLogger() {
 
     }
+
     public static void logExceptionQuiet(String message, Exception e) {
         synchronized (exceptionsHistory) {
             exceptionsHistory.append(message).append(e);

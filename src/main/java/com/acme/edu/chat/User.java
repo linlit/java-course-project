@@ -17,6 +17,7 @@ public class User {
 
     /**
      * Representation of chat user, specified by:
+     *
      * @param out output stream which server writes answers to
      */
     public User(DataOutputStream out) {
@@ -51,7 +52,8 @@ public class User {
 
     /**
      * Writes message to user's output stream
-     * @param message  String message to be sent
+     *
+     * @param message String message to be sent
      */
     public void notifyUser(String message) throws SendMessageException {
         try {

@@ -34,7 +34,7 @@ public class Client {
         }
     }
 
-    private static void startClientListener(Scanner in, DataOutputStream output) {
+    public static void startClientListener(Scanner in, DataOutputStream output) {
         while (serverAlive) {
             try {
                 String currentLine = in.nextLine();
@@ -64,7 +64,7 @@ public class Client {
         thread.start();
     }
 
-    static void sendMessage(String message, DataOutputStream out) throws ClientException {
+    protected static void sendMessage(String message, DataOutputStream out) throws ClientException {
         try {
             String decoratedMessage = manager.getFilteredMessage(message);
 

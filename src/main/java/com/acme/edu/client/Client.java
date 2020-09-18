@@ -13,10 +13,11 @@ import java.util.Scanner;
  */
 public class Client {
     private static final MessagePreprocessor manager = new MessagePreprocessor();
+    public static final String SERVER_IS_NOT_AVAILABLE = "Server is not available.";
     private static boolean serverAlive = true;
     public static void main(String[] args) {
         try (
-                final Socket connection = new Socket("127.0.0.1", 10_000);
+                final Socket connection = new Socket(args[0], Integer.parseInt(args[1]));
                 final DataInputStream input =
                         new DataInputStream(
                                 new BufferedInputStream(connection.getInputStream()));
@@ -28,8 +29,8 @@ public class Client {
             startServerListener(input);
             startClientListener(in, output);
         } catch (IOException e) {
-            ExceptionLogger.logException("Server is not available.", e);
-            System.err.println("Server is not available.");
+            ExceptionLogger.logException(SERVER_IS_NOT_AVAILABLE, e);
+            System.err.println(SERVER_IS_NOT_AVAILABLE);
         }
     }
 
@@ -37,7 +38,7 @@ public class Client {
         while (serverAlive) {
             try {
                 String currentLine = in.nextLine();
-                if (!serverAlive || manager.isExitCommand(currentLine)) {
+                if (manager.isExitCommand(currentLine)) {
                     return;
                 }
                 sendMessage(currentLine, output);
@@ -55,8 +56,8 @@ public class Client {
                     String readLine = input.readUTF();
                     System.out.println(readLine);
                 } catch (IOException e) {
-                    ExceptionLogger.logException("Server is not available.", e);
-                    System.err.println("Server is not available.");
+                    ExceptionLogger.logException(SERVER_IS_NOT_AVAILABLE, e);
+                    System.err.println(SERVER_IS_NOT_AVAILABLE);
                     serverAlive = false;
                 }
             }

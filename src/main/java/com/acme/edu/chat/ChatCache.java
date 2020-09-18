@@ -11,7 +11,7 @@ import static java.lang.System.lineSeparator;
  * Class for logging chat messages to specific file
  */
 public class ChatCache {
-    private final String chatLogPath = "log.txt";
+    private static final String chatLogPath = "log.txt";
 
     /**
      * Adding new message to chat log file.

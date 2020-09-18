@@ -20,7 +20,7 @@ public class ChatObserver {
      */
     public void subscribeToChat(User client) {
         chatMembers.add(client);
-    };
+    }
 
     /**
      * Deleting customer from chat.
@@ -28,7 +28,7 @@ public class ChatObserver {
     public void unsubscribeFromChat(User client) {
         chatMembers.remove(client);
         client.setIsAuthenticated();
-    };
+    }
 
     /**
      * Notify all users in the chat about updates.
@@ -44,7 +44,7 @@ public class ChatObserver {
                 }
             });
         }
-    };
+    }
 
     /**
      * Load all chat history and notifies user who ordered it.

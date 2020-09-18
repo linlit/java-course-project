@@ -25,7 +25,7 @@ public class Server {
 
     public static void main(String[] args) {
         try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
-            ExecutorService executor =  Executors.newFixedThreadPool(1000);
+        final ExecutorService executor =  Executors.newFixedThreadPool(1000);
 
             while (!connectionPortListener.isClosed()) {
                 final Socket clientConnection = connectionPortListener.accept();

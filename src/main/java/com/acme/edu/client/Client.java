@@ -34,7 +34,7 @@ public class Client {
         }
     }
 
-    private static void startClientListener(Scanner in, DataOutputStream output) {
+    static void startClientListener(Scanner in, DataOutputStream output) {
         while (serverAlive) {
             try {
                 String currentLine = in.nextLine();

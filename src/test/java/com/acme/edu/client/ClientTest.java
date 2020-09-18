@@ -2,12 +2,13 @@ package com.acme.edu.client;
 
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import com.acme.edu.exception.ClientException;
+import com.acme.edu.exception.ExceptionLogger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 
@@ -39,5 +40,37 @@ public class ClientTest implements SysoutCaptureAndAssertionAbility {
 
         verify(outMock, times(1)).flush();
     }
-}
 
+    @Test
+    public void shouldWriteServerIsNotAvailableWhenCanNotConnect() {
+        ExceptionLogger mock = mock(ExceptionLogger.class);
+
+        Client.main(new String[]{"", "1"});
+
+        verify(mock, times(1)).logExceptionWithError("Server is not available.", any(IOException.class));
+    }
+
+
+    @Test
+    public void shouldInterruptWhenCallExitCommand() throws ClientException {
+        Client dummy = mock(Client.class);
+        DataOutputStream out = new DataOutputStream(System.out);
+        Scanner in = new Scanner("/exit");
+
+        Client.startClientListener(in, out);
+
+        verify(dummy, never()).sendMessage("/exit", out);
+    }
+
+
+    @Test
+    public void shouldFlushMessageWhenStartServerListener() throws ClientException {
+        DataOutputStream out = new DataOutputStream(System.out);
+        Client dummy = mock(Client.class);
+        Scanner in = new Scanner("/snd message" + System.lineSeparator() + "/exit");
+
+        Client.startClientListener(in, out);
+
+        verify(dummy, times(1)).sendMessage("/snd message", out);
+    }
+}

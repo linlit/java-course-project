@@ -2,12 +2,11 @@ package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
-
+import com.acme.edu.chat.reactors.CommandReactor;
+import com.acme.edu.chat.reactors.ExitReactor;
 import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
 import com.acme.edu.exception.SendMessageException;
-import com.acme.edu.chat.reactors.CommandReactor;
-import com.acme.edu.chat.reactors.ExitReactor;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -22,9 +21,9 @@ public class Server {
     private static final ChatObserver observer = new ChatObserver();
     private static final MessageProcessor messageProcessor = new MessageProcessor();
 
-    public static void main(String[] args) {
-        try (final ServerSocket connectionPortListener = new ServerSocket(10_000)) {
-        final ExecutorService executor =  Executors.newFixedThreadPool(1000);
+    public static void main(String[] args){
+        try (final ServerSocket connectionPortListener = new ServerSocket(Integer.parseInt(args[0]))) {
+            final ExecutorService executor = Executors.newFixedThreadPool(1000);
 
             while (!connectionPortListener.isClosed()) {
                 final Socket clientConnection = connectionPortListener.accept();
@@ -53,7 +52,7 @@ public class Server {
                 reactor.react();
             } catch (IOException e) {
                 new ExitReactor(user, observer).react();
-            } catch (InvalidMessageException| SendMessageException e) {
+            } catch (InvalidMessageException | SendMessageException e) {
                 ExceptionLogger.logExceptionQuiet("Cannot perform client action for client " + user, e);
             }
         }

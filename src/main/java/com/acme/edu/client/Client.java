@@ -2,6 +2,7 @@ package com.acme.edu.client;
 
 import com.acme.edu.exception.ClientException;
 import com.acme.edu.exception.ExceptionLogger;
+import com.acme.edu.exception.InvalidMessageException;
 
 import java.io.*;
 import java.net.Socket;
@@ -66,9 +67,12 @@ public class Client {
     static void sendMessage(String message, DataOutputStream out) throws ClientException {
         try {
             String decoratedMessage = manager.getFilteredMessage(message);
-            out.writeUTF(decoratedMessage);
-            out.flush();
-        } catch (IOException e) {
+
+            if (!"".equals(decoratedMessage)) {
+                out.writeUTF(decoratedMessage);
+                out.flush();
+            }
+        } catch (IOException | InvalidMessageException e) {
             throw new ClientException();
         }
     }

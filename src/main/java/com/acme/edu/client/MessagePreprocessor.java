@@ -3,10 +3,8 @@ package com.acme.edu.client;
 import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Client-side pre-processing message
@@ -33,7 +31,7 @@ public class MessagePreprocessor {
                 "/exit".equals(message) || message.startsWith("/chroom ") || message.startsWith("/sdnp");
     }
 
-    public String getFilteredMessage(String message) {
+    public String getFilteredMessage(String message) throws InvalidMessageException {
         if (message.startsWith("/snd ")) {
             filterLen(message.substring(5));
             return decorate(message, "/snd ");
@@ -46,8 +44,7 @@ public class MessagePreprocessor {
         if (checkIfCorrectCommand(message)) {
             return message;
         } else {
-            ExceptionLogger.logExceptionWithInfo("Unknown command", new InvalidMessageException());
-            return "";
+            throw new InvalidMessageException("Invalid command!");
         }
     }
 

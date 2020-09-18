@@ -2,7 +2,6 @@ package com.acme.edu.chat.reactors;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
-import com.acme.edu.exception.ChatException;
 import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.SendMessageException;
 

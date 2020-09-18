@@ -24,11 +24,11 @@ public class ClientTest implements SysoutCaptureAndAssertionAbility {
         resetOut();
     }
 
-    @Test
-    public void shouldThrowClientExceptionWhenIllegalCommandCalled() throws ClientException, IOException {
+    @Test(expected = ClientException.class)
+    public void shouldThrowClientExceptionWhenIllegalCommandCalled() throws ClientException {
         DataOutputStream mock = mock(DataOutputStream.class);
         Client.sendMessage("/fhf", mock);
-        assertSysoutEquals("Unknown command" + System.lineSeparator());
+        assertSysoutEquals("Incorrect message. Please, try again!" + System.lineSeparator());
     }
 
     @Test

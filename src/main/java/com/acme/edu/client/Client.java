@@ -1,14 +1,14 @@
 package com.acme.edu.client;
 
 import com.acme.edu.exception.ClientException;
+import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
-import com.acme.edu.server.Server;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-/*
+/**
  * Client-side logic of application
  */
 public class Client {
@@ -25,18 +25,16 @@ public class Client {
                                 new BufferedOutputStream(connection.getOutputStream()));
                 final Scanner in = new Scanner(System.in)
         ) {
-
             startServerListener(input);
-
             startClientListener(in, output);
-
         } catch (IOException e) {
+            ExceptionLogger.logException("Server is not available.", e);
             System.err.println("Server is not available.");
         }
     }
 
     private static void startClientListener(Scanner in, DataOutputStream output) {
-        while(serverAlive) {
+        while (serverAlive) {
             try {
                 String currentLine = in.nextLine();
                 if (!serverAlive || manager.isExitCommand(currentLine)) {
@@ -44,6 +42,7 @@ public class Client {
                 }
                 sendMessage(currentLine, output);
             } catch (ClientException e) {
+                ExceptionLogger.logException("Incorrect message", e);
                 System.out.println("Please, try again!");
             }
         }
@@ -51,11 +50,12 @@ public class Client {
 
     private static void startServerListener(DataInputStream input) {
         Thread thread = new Thread(() -> {
-            while(serverAlive) {
+            while (serverAlive) {
                 try {
                     String readLine = input.readUTF();
                     System.out.println(readLine);
                 } catch (IOException e) {
+                    ExceptionLogger.logException("Server is not available.", e);
                     System.err.println("Server is not available.");
                     serverAlive = false;
                 }

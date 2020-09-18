@@ -4,7 +4,7 @@ import com.acme.edu.exception.InvalidMessageException;
 
 import java.time.LocalDateTime;
 
-/*
+/**
  * Client-side pre-processing message
  */
 public class MessagePreprocessor {

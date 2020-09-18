@@ -1,5 +1,8 @@
 package com.acme.edu.exception;
 
+/**
+ * Custom exceptions logger, supports saving to exception history and getting all the history.
+ */
 public class ExceptionLogger {
     static private final StringBuffer exceptionsHistory = new StringBuffer();
 
@@ -10,6 +13,6 @@ public class ExceptionLogger {
     }
 
     static public String getExceptionLog() {
-        return exceptionsHistory .toString();
+        return exceptionsHistory.toString();
     }
 }

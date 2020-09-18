@@ -7,9 +7,16 @@ import java.nio.charset.StandardCharsets;
 
 import static java.lang.System.lineSeparator;
 
+/**
+ * Class for logging chat messages to specific file
+ */
 public class ChatCache {
     private final String chatLogPath = "log.txt";
 
+    /**
+     * Adding new message to chat log file.
+     * @param message String to add to log
+     */
     public void add(String message) {
         try (BufferedWriter bufferedWriter =
                      new BufferedWriter(
@@ -24,6 +31,9 @@ public class ChatCache {
         }
     }
 
+    /**
+     * Loading chat history from file.
+     */
     public String getHistoryChatCache() {
         try (BufferedReader br =
                      new BufferedReader(
@@ -33,7 +43,7 @@ public class ChatCache {
             String readLine;
             StringBuilder historyChatCache = new StringBuilder();
             while ((readLine = br.readLine()) != null) {
-                historyChatCache.append(">> ").append(readLine).append(lineSeparator());
+                historyChatCache.append("> ").append(readLine).append(lineSeparator());
             }
             return historyChatCache.toString();
         } catch (IOException e) {

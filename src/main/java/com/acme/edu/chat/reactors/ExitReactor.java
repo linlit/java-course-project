@@ -2,6 +2,7 @@ package com.acme.edu.chat.reactors;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
+import com.acme.edu.exception.ExceptionLogger;
 
 /**
  * Reacts when user wants to exit the chat.
@@ -22,7 +23,7 @@ public class ExitReactor implements CommandReactor {
 
     @Override
     public void react() {
-        System.out.println("User "+ user.getUserName() +" has quiet");
+        ExceptionLogger.logExceptionWithInfo("User "+ user.getUserName() +" has quiet", new Exception("User has quiet"));
         this.observer.unsubscribeFromChat(this.user);
     }
 }

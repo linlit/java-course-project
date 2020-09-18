@@ -14,12 +14,12 @@ public class ExceptionLogger {
 
     static public void logExceptionWithError(String message, Exception e) {
         logExceptionQuiet(message, e);
-        System.err.println(message);
+        ExceptionLogger.logExceptionWithInfo(message, new Exception(message));
     }
 
     static public void logExceptionWithInfo(String message, Exception e) {
         logExceptionQuiet(message, e);
-        System.out.println(message);
+        ExceptionLogger.logExceptionWithInfo(message, new Exception(message));
     }
 
     static public String getExceptionLog() {

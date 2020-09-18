@@ -2,6 +2,8 @@ package com.acme.edu.client;
 
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import com.acme.edu.exception.ClientException;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -11,12 +13,22 @@ import static org.mockito.Mockito.*;
 
 public class ClientTest implements SysoutCaptureAndAssertionAbility {
 
-    @Test(expected = ClientException.class)
-    @Ignore
+    @Before
+    public void setUpSystemOut() {
+        resetOut();
+        captureSysout();
+    }
+
+    @After
+    public void tearDown() {
+        resetOut();
+    }
+
+    @Test
     public void shouldThrowClientExceptionWhenIllegalCommandCalled() throws ClientException, IOException {
         DataOutputStream mock = mock(DataOutputStream.class);
-
         Client.sendMessage("/fhf", mock);
+        assertSysoutEquals("Unknown command" + System.lineSeparator());
     }
 
     @Test

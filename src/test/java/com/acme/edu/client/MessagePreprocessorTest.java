@@ -20,30 +20,26 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
         resetOut();
     }
 
-    @Test(expected = InvalidMessageException.class)
-    @Ignore
+    @Test
     public void shouldThrowInvalidMessageExceptionWhenWrongCommand() {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/histhdbhdbh");
     }
 
-    @Test()
-    @Ignore
+    @Test
     public void shouldDecorateSendMessageWhenSendCommandSND() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "2020", "cat");
     }
 
-    @Test()
-    @Ignore
+    @Test
     public void shouldSendMessageExitORHistWithoutChange() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
     }
 
-    @Test()
-    @Ignore
+    @Test
     public void shouldSendMessageExitORHistORChidWithoutChange() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
@@ -51,18 +47,17 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
         Assertions.assertThat(manager.getFilteredMessage("/chid name")).isEqualTo("/chid name");
     }
 
-    @Test(expected = InvalidMessageException.class)
-    @Ignore
+    @Test
     public void shouldNotifyWhenMessageLengthOverThan150() {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/snd qwertyuiopqwertyuiocfcgcvfgcvgjf" +
                 "cgffgcjvggcghcghcgfhcfgcgpsdfghjklasdfghjkasdfghjksdfghjks" +
                 "dfghjklsdfvgbhnsdfvbnxcvbndfghjsdfgbhncvbghnfcyscgcfgcvfgcf" +
                 "gcfgcfgcfgcgcjcjchgjbbkkjkkjhkggvfcvghbjfvgbhjnkcdfgvhbjdcfg");
+        assertSysoutEquals("Message length is over 150 characters" + System.lineSeparator());
     }
 
-    @Test()
-    @Ignore
+    @Test
     public void shouldDifferCommandFromOther() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.isExitCommand("/snd g")).isFalse();

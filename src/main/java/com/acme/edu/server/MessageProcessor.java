@@ -32,7 +32,7 @@ public class MessageProcessor {
         } else if (message.trim().equals("/exit")) {
             return new ExitReactor(user, observer);
         } else if (message.startsWith("/chid ")) {
-            return new AuthenticationReactor(message.split("/chid ")[1], user);
+            return new AuthenticationReactor(message.split("/chid ")[1], observer, user);
         } else if (message.startsWith("/chroom ")) {
             return new ChangeRoomReactor(message.split("/chroom ")[1], observer, user);
         } else if (message.startsWith("/sdnp ")) {

@@ -6,9 +6,8 @@ import com.acme.edu.chat.User;
 import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
 import com.acme.edu.exception.SendMessageException;
-import com.acme.edu.parser.MessageProcessor;
-import com.acme.edu.parser.reactors.CommandReactor;
-import com.acme.edu.parser.reactors.ExitReactor;
+import com.acme.edu.chat.reactors.CommandReactor;
+import com.acme.edu.chat.reactors.ExitReactor;
 
 import java.io.*;
 import java.net.ServerSocket;

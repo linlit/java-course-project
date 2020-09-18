@@ -27,13 +27,18 @@ public class ChatObserver {
     }
 
     /**
-     * Deleting customer from chat.
+     * Deleting user from chat for all.
+     * @param client user that needs an exit from the whole chat
      */
     public void unsubscribeFromChat(User client) {
         unsubscribeFromRoom(client);
         client.setIsAuthenticated(false);
     }
 
+    /**
+     * Deleting user from his current room for further change room or exiting app.
+     * @param client  user that needs to be deleted from chat room
+     */
     public void unsubscribeFromRoom(User client) {
         synchronized (this.chatMembers) {
             this.chatMembers.get(client.getRoomId()).remove(client);
@@ -42,6 +47,8 @@ public class ChatObserver {
 
     /**
      * Notify all users in the chat about updates.
+     * @param message  String that needs to be send to others
+     * @param roomId  identifier of room which users need to be notified
      */
     public void notifyChatMembers(String message, String roomId) {
         synchronized (this.chatMembers) {
@@ -56,8 +63,11 @@ public class ChatObserver {
         }
     }
 
+    public void notifyOneMember(String message, User from, User to) {}
+
     /**
      * Load all chat history and notifies user who ordered it.
+     * @param user client that wants to see current room history
      */
     public void loadHistory(User user) throws SendMessageException {
         user.notifyUser(this.cache.getHistoryChatCache(user.getRoomId()));

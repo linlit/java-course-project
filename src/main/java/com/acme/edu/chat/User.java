@@ -15,6 +15,10 @@ public class User {
     private final DataOutputStream outputStream;
     private volatile boolean isAuthenticated;
 
+    /**
+     * Representation of chat user, specified by:
+     * @param out output stream which server writes answers to
+     */
     public User(DataOutputStream out) {
         this.outputStream = out;
         this.roomId = "main";

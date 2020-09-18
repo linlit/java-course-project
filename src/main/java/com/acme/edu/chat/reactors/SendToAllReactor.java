@@ -1,4 +1,4 @@
-package com.acme.edu.parser.reactors;
+package com.acme.edu.chat.reactors;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
@@ -6,7 +6,7 @@ import com.acme.edu.chat.User;
 /**
  * Reacts when user wants to send a message.
  */
-public class SendReactor implements CommandReactor {
+public class SendToAllReactor implements CommandReactor {
     private final String sendMessage;
     private final ChatObserver observer;
     private final User user;
@@ -16,7 +16,7 @@ public class SendReactor implements CommandReactor {
      * @param message String that should be sent
      * @param observer ChatObserver for all rooms
      */
-    public SendReactor(String message, ChatObserver observer, User user) {
+    public SendToAllReactor(String message, ChatObserver observer, User user) {
         this.sendMessage = message;
         this.observer = observer;
         this.user = user;

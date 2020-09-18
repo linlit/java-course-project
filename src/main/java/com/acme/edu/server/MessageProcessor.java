@@ -1,14 +1,17 @@
-package com.acme.edu.parser;
+package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 import com.acme.edu.exception.InvalidMessageException;
-import com.acme.edu.parser.reactors.*;
+import com.acme.edu.chat.reactors.*;
 
 /**
  * Creates command pattern for reacting on messages.
+ * @see User
+ * @see ChatObserver
  */
 public class MessageProcessor {
+
     /**
      * Parses user message and decides which Command Reactor should be called.
      *
@@ -24,7 +27,7 @@ public class MessageProcessor {
         } else if (message.startsWith("/snd ")) {
             String userName = user.getUserName();
             String preparedMessage = (userName != null ? userName + ": " : "") + message.split("/snd ")[1];
-            return new SendReactor(preparedMessage, observer, user);
+            return new SendToAllReactor(preparedMessage, observer, user);
         } else if (message.trim().equals("/exit")) {
             return new ExitReactor(user, observer);
         } else if (message.startsWith("/chid ")) {

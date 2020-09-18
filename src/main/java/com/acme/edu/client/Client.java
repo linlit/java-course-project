@@ -53,7 +53,7 @@ public class Client {
             while (serverAlive) {
                 try {
                     String readLine = input.readUTF();
-                    ExceptionLogger.logExceptionWithInfo(readLine, new Exception("New Line was read"));;
+                    ExceptionLogger.logExceptionWithInfo(readLine, new Exception("New Line was read"));
                 } catch (IOException e) {
                     ExceptionLogger.logExceptionWithError(SERVER_IS_NOT_AVAILABLE, e);
                     serverAlive = false;

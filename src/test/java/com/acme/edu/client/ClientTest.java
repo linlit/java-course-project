@@ -1,18 +1,10 @@
 package com.acme.edu.client;
 
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
-import com.acme.edu.chat.ChatObserver;
-import com.acme.edu.chat.User;
-import com.acme.edu.client.Client;
 import com.acme.edu.exception.ClientException;
-import com.acme.edu.exception.InvalidMessageException;
-import com.acme.edu.parser.MessageProcessor;
-import com.acme.edu.server.Server;
 import org.junit.Test;
 
 import java.io.*;
-import java.net.Socket;
-import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 

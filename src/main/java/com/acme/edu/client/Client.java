@@ -36,7 +36,6 @@ public class Client {
     private static void startClientListener(Scanner in, DataOutputStream output) {
         while (serverAlive) {
             try {
-                System.out.println("fjfjf");
                 String currentLine = in.nextLine();
                 if (manager.isExitCommand(currentLine)) {
                     return;

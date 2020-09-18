@@ -1,10 +1,6 @@
 package com.acme.edu.client;
 
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
-<<<<<<< HEAD:src/test/java/com/acme/edu/client/MessagePreprocessorTest.java
-=======
-import com.acme.edu.client.MessagePreprocessor;
->>>>>>> 8ba8c71... Add ClientTest:src/test/java/com/acme/edu/client/MessageManagerTest.java
 import com.acme.edu.exception.InvalidMessageException;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
@@ -24,20 +20,20 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
     }
 
     @Test(expected = InvalidMessageException.class)
-    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() throws InvalidMessageException {
+    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/histhdbhdbh");
 
     }
 
     @Test()
-    public void shouldDecorateSendMessageWhenSendCommandSND() throws InvalidMessageException {
+    public void shouldDecorateSendMessageWhenSendCommandSND() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "2020", "cat");
     }
 
     @Test()
-    public void shouldSendMessageExitORHistWithoutChange() throws InvalidMessageException {
+    public void shouldSendMessageExitORHistWithoutChange() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");

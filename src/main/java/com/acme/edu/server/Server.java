@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/*
+/**
  * Emulates server-side work
  */
 public class Server {
@@ -40,6 +40,12 @@ public class Server {
         }
     }
 
+    /**
+     * Submits a job for new user thread
+     *
+     * @param inputStream  input user stream
+     * @param outputStream output user stream
+     */
     public static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
         observer.subscribeToChat("main", user);

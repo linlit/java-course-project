@@ -37,7 +37,7 @@ public class Client {
         while (serverAlive) {
             try {
                 String currentLine = in.nextLine();
-                if (manager.isExitCommand(currentLine)) {
+                if (!serverAlive || manager.isExitCommand(currentLine)) {
                     return;
                 }
                 sendMessage(currentLine, output);

@@ -2,11 +2,12 @@ package com.acme.edu.server;
 
 import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
-import com.acme.edu.exception.InvalidMessageException;
 import com.acme.edu.chat.reactors.*;
+import com.acme.edu.exception.InvalidMessageException;
 
 /**
  * Creates command pattern for reacting on messages.
+ *
  * @see User
  * @see ChatObserver
  */
@@ -15,8 +16,8 @@ public class MessageProcessor {
     /**
      * Parses user message and decides which Command Reactor should be called.
      *
-     * @param message String that was sent from a client
-     * @param user User that invoked command by sending message
+     * @param message  String that was sent from a client
+     * @param user     User that invoked command by sending message
      * @param observer ChatObserver that supports subscribing, unsubscribing from current chat
      * @return CommandReactor for performing specific reaction after command parsing
      * @throws InvalidMessageException when message has wrong
@@ -34,6 +35,10 @@ public class MessageProcessor {
             return new AuthenticationReactor(message.split("/chid ")[1], user);
         } else if (message.startsWith("/chroom ")) {
             return new ChangeRoomReactor(message.split("/chroom ")[1], observer, user);
+        } else if (message.startsWith("/sdnp ")) {
+            String userNameTo = message.split("[ ]+")[2];
+            String mess = message.split("[ ]+")[1] + " " + message.split("[ ]+", 4)[3];
+            return new SendToOneUser(user, userNameTo, mess, observer);
         } else {
             throw new InvalidMessageException("Wrong format of message: " + message);
         }

@@ -3,14 +3,22 @@ package com.acme.edu.client;
 import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Client-side pre-processing message
  */
+
+
 public class MessagePreprocessor {
-    private String decorate(String message) {
-        return "/snd " + LocalDateTime.now() + " " + message.substring(5);
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    LocalDateTime now;
+    private String decorate(String message, String delta) {
+        now = LocalDateTime.now();
+        return delta + dtf.format(now) + " " + message.substring(delta.length());
     }
 
     private void filterLen(String message) {
@@ -22,13 +30,17 @@ public class MessagePreprocessor {
 
     private boolean checkIfCorrectCommand(String message) {
         return message.startsWith("/chid ") || "/hist".equals(message) ||
-                "/exit".equals(message) || message.startsWith("/chroom ");
+                "/exit".equals(message) || message.startsWith("/chroom ") || message.startsWith("/sdnp");
     }
 
     public String getFilteredMessage(String message) {
         if (message.startsWith("/snd ")) {
             filterLen(message.substring(5));
-            return decorate(message);
+            return decorate(message, "/snd ");
+        }
+        if (message.startsWith("/sdnp ")) {
+            filterLen(message.substring(6));
+            return decorate(message, "/sdnp ");
         }
 
         if (checkIfCorrectCommand(message)) {

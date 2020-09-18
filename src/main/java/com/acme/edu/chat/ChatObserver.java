@@ -14,9 +14,17 @@ import java.util.concurrent.ConcurrentMap;
  * Class that represents pattern Observer for chat activities.
  */
 public class ChatObserver {
-    private final ConcurrentMap<String, Set<User>> chatMembers = new ConcurrentHashMap<>();
-    private final ChatCache cache = new ChatCache();
+    final ConcurrentMap<String, Set<User>> chatMembers;
+    final ChatCache cache;
 
+    public ChatObserver(){
+        this.chatMembers = new ConcurrentHashMap<>();
+        this.cache = new ChatCache();
+    }
+    ChatObserver(ConcurrentMap<String, Set<User>> chatMembers){
+        this.chatMembers = chatMembers;
+        this.cache = new ChatCache();
+    }
     /**
      * Adding new user to group chat and update listeners
      *

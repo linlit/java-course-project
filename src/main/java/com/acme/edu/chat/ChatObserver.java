@@ -17,14 +17,16 @@ public class ChatObserver {
     final ConcurrentMap<String, Set<User>> chatMembers;
     final ChatCache cache;
 
-    public ChatObserver(){
+    public ChatObserver() {
         this.chatMembers = new ConcurrentHashMap<>();
         this.cache = new ChatCache();
     }
-    ChatObserver(ConcurrentMap<String, Set<User>> chatMembers){
+
+    ChatObserver(ConcurrentMap<String, Set<User>> chatMembers) {
         this.chatMembers = chatMembers;
         this.cache = new ChatCache();
     }
+
     /**
      * Adding new user to group chat and update listeners
      *
@@ -79,9 +81,8 @@ public class ChatObserver {
     }
 
     /**
-     *
-     * @param message private user-to-user message
-     * @param fromUser user that sent the message
+     * @param message    private user-to-user message
+     * @param fromUser   user that sent the message
      * @param toUserName username of user he wants to send the message
      */
     public void notifyOneMember(String message, User fromUser, String toUserName) {
@@ -96,7 +97,6 @@ public class ChatObserver {
     }
 
     /**
-     *
      * @param toUserName username to find among all
      * @return found user
      */
@@ -105,7 +105,9 @@ public class ChatObserver {
 
         synchronized (this.chatMembers) {
             chatMembers.forEach((e, set) ->
-                    set.forEach(usr -> { if (toUserName.equals(usr.getUserName())) user.add(usr); })
+                    set.forEach(usr -> {
+                        if (toUserName.equals(usr.getUserName())) user.add(usr);
+                    })
             );
         }
         return user;
@@ -135,7 +137,7 @@ public class ChatObserver {
     }
 
     private String prepareToFromMessage(String message, String userName) {
-        userName = (userName == null)? "Undefined(Wo)Man" : userName;
+        userName = (userName == null) ? "Undefined(Wo)Man" : userName;
         return "from " + userName + " to me " + message + " (private) ";
     }
 }

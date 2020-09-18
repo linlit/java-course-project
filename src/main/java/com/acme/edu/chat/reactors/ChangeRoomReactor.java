@@ -13,9 +13,10 @@ public class ChangeRoomReactor implements CommandReactor {
 
     /**
      * Creates reactor for switching chat rooms.
-     * @param roomId String room id to be switched to
+     *
+     * @param roomId   String room id to be switched to
      * @param observer ChatObserver for all rooms
-     * @param user User that wants to switch chats
+     * @param user     User that wants to switch chats
      */
     public ChangeRoomReactor(String roomId, ChatObserver observer, User user) {
         this.roomId = roomId;

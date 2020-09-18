@@ -14,10 +14,11 @@ public class SendToOneUser implements CommandReactor {
 
     /**
      * Creates reactor for private send action.
-     * @param userFrom User who sent a message
+     *
+     * @param userFrom   User who sent a message
      * @param userNameTo username of User that message is sent to
-     * @param message String to be sent
-     * @param observer ChatObserver for all rooms
+     * @param message    String to be sent
+     * @param observer   ChatObserver for all rooms
      */
     public SendToOneUser(User userFrom, String userNameTo, String message, ChatObserver observer) {
         this.userFrom = userFrom;

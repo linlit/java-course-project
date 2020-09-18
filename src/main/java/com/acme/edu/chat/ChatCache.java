@@ -13,6 +13,7 @@ import static java.lang.System.lineSeparator;
 public class ChatCache {
     private String getLogPath(String roomId) {
         String chatLogPath = "logs/";
+        System.out.println(chatLogPath + "room_" + roomId + ".txt");
         return chatLogPath + "room_" + roomId + ".txt";
     }
 

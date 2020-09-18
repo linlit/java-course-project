@@ -70,34 +70,41 @@ public class ChatObserver {
         }
     }
 
+    /**
+     *
+     * @param message private user-to-user message
+     * @param fromUser user that sent the message
+     * @param toUserName username of user he wants to send the message
+     */
     public void notifyOneMember(String message, User fromUser, String toUserName) {
-        notifyJustOneUser(fromUser, prepareFromToMessage(message, toUserName));
+        tryNotify(fromUser, prepareFromToMessage(message, toUserName));
         String messageToUs = prepareToFromMessage(message, fromUser.getUserName());
         List<User> listUsers = findMeAllUsersWithName(toUserName);
+
         if (listUsers.isEmpty()) return;
         listUsers.forEach(
-                user -> notifyJustOneUser(user, messageToUs)
+                user -> tryNotify(user, messageToUs)
         );
-
     }
 
-
-    private List<User> findMeAllUsersWithName(String toUserName) {
+    /**
+     *
+     * @param toUserName username to find among all
+     * @return found user
+     */
+    public List<User> findMeAllUsersWithName(String toUserName) {
         List<User> user = new LinkedList<>();
+
         synchronized (this.chatMembers) {
             chatMembers.forEach((e, set) ->
-                    set.forEach(usr ->
-                            {
-                                if (toUserName.equals(usr.getUserName())) user.add(usr);
-                            }
-                    )
+                    set.forEach(usr -> { if (toUserName.equals(usr.getUserName())) user.add(usr); })
             );
         }
         return user;
     }
 
 
-    private void notifyJustOneUser(User user, String message) {
+    private void tryNotify(User user, String message) {
         try {
             user.notifyUser(message);
         } catch (SendMessageException e) {

@@ -4,7 +4,7 @@ import com.acme.edu.chat.ChatObserver;
 import com.acme.edu.chat.User;
 
 /**
- * Reacts when user wants to send a message.
+ * Reacts when user wants to send a message to all chat members.
  */
 public class SendToAllReactor implements CommandReactor {
     private final String sendMessage;
@@ -12,7 +12,7 @@ public class SendToAllReactor implements CommandReactor {
     private final User user;
 
     /**
-     * Creates reactor for send action.
+     * Creates reactor for non-private send action.
      * @param message String that should be sent
      * @param observer ChatObserver for all rooms
      */

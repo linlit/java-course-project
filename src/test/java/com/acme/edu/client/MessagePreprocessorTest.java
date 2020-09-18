@@ -5,7 +5,6 @@ import com.acme.edu.exception.InvalidMessageException;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility {
@@ -21,48 +20,43 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
     }
 
     @Test(expected = InvalidMessageException.class)
-    @Ignore
-    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() {
+    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/histhdbhdbh");
     }
 
-    @Test()
-    @Ignore
-    public void shouldDecorateSendMessageWhenSendCommandSND() {
+    @Test
+    public void shouldDecorateSendMessageWhenSendCommandSND() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
-        Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "2020", "cat");
+        Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "cat");
     }
 
-    @Test()
-    @Ignore
-    public void shouldSendMessageExitORHistWithoutChange() {
+    @Test
+    public void shouldSendMessageExitORHistWithoutChange() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
     }
 
-    @Test()
-    @Ignore
-    public void shouldSendMessageExitORHistORChidWithoutChange() {
+    @Test
+    public void shouldSendMessageExitORHistORChidWithoutChange() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");
         Assertions.assertThat(manager.getFilteredMessage("/chid name")).isEqualTo("/chid name");
     }
 
-    @Test(expected = InvalidMessageException.class)
-    @Ignore
-    public void shouldNotifyWhenMessageLengthOverThan150() {
+    @Test
+    public void shouldNotifyWhenMessageLengthOverThan150() throws InvalidMessageException {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/snd qwertyuiopqwertyuiocfcgcvfgcvgjf" +
                 "cgffgcjvggcghcghcgfhcfgcgpsdfghjklasdfghjkasdfghjksdfghjks" +
                 "dfghjklsdfvgbhnsdfvbnxcvbndfghjsdfgbhncvbghnfcyscgcfgcvfgcf" +
                 "gcfgcfgcfgcgcjcjchgjbbkkjkkjhkggvfcvghbjfvgbhjnkcdfgvhbjdcfg");
+        assertSysoutEquals("Message length is over 150 characters" + System.lineSeparator());
     }
 
-    @Test()
-    @Ignore
+    @Test
     public void shouldDifferCommandFromOther() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.isExitCommand("/snd g")).isFalse();

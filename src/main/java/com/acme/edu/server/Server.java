@@ -41,7 +41,7 @@ public class Server {
         }
     }
 
-    private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
+    public static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
         observer.subscribeToChat("main", user);
 

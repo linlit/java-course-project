@@ -63,7 +63,7 @@ public class Client {
         thread.start();
     }
 
-    private static void sendMessage(String message, DataOutputStream out) throws ClientException {
+    static void sendMessage(String message, DataOutputStream out) throws ClientException {
         try {
             String decoratedMessage = manager.getFilteredMessage(message);
             out.writeUTF(decoratedMessage);

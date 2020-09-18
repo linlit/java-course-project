@@ -20,20 +20,20 @@ public class MessagePreprocessorTest implements SysoutCaptureAndAssertionAbility
     }
 
     @Test(expected = InvalidMessageException.class)
-    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() throws InvalidMessageException {
+    public void shouldThrowInvalidMessageExceptionWhenWrongCommand() {
         MessagePreprocessor manager = new MessagePreprocessor();
         manager.getFilteredMessage("/histhdbhdbh");
 
     }
 
     @Test()
-    public void shouldDecorateSendMessageWhenSendCommandSND() throws InvalidMessageException {
+    public void shouldDecorateSendMessageWhenSendCommandSND() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/snd cat")).contains("/snd", "2020", "cat");
     }
 
     @Test()
-    public void shouldSendMessageExitORHistWithoutChange() throws InvalidMessageException {
+    public void shouldSendMessageExitORHistWithoutChange() {
         MessagePreprocessor manager = new MessagePreprocessor();
         Assertions.assertThat(manager.getFilteredMessage("/exit")).isEqualTo("/exit");
         Assertions.assertThat(manager.getFilteredMessage("/hist")).isEqualTo("/hist");

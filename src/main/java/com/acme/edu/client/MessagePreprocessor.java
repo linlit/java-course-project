@@ -20,7 +20,8 @@ public class MessagePreprocessor {
     }
 
     private boolean checkIfCorrectCommand(String message) {
-        return message.startsWith("/chid ") || "/hist".equals(message) || "/exit".equals(message);
+        return message.startsWith("/chid ") || "/hist".equals(message) ||
+                "/exit".equals(message) || message.startsWith("/chroom ");
     }
 
     public String getFilteredMessage(String message) throws InvalidMessageException {

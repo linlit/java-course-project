@@ -44,7 +44,7 @@ public class Server {
 
     private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
-        observer.subscribeToChat(user);
+        observer.subscribeToChat("main", user);
 
         while (user.getIsAuthenticated()) {
             String clientMessage = "";

@@ -13,7 +13,7 @@ public class ExitReactor implements CommandReactor {
     /**
      * Creates reactor for exiting the chat.
      * @param user User that wants to leave the chat
-     * @param observer ChatObserver for current chat
+     * @param observer ChatObserver for all rooms
      */
     public ExitReactor(User user, ChatObserver observer) {
         this.user = user;

@@ -11,16 +11,26 @@ import java.io.IOException;
  */
 public class User {
     private String userName;
+    private volatile String roomId;
     private final DataOutputStream outputStream;
     private volatile boolean isAuthenticated;
 
     public User(DataOutputStream out) {
         this.outputStream = out;
+        this.roomId = "main";
         this.isAuthenticated = true;
     }
 
-    public void setIsAuthenticated() {
-        this.isAuthenticated = false;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setIsAuthenticated(boolean auth) {
+        this.isAuthenticated = auth;
     }
 
     public boolean getIsAuthenticated() {

@@ -13,7 +13,8 @@ import static java.lang.System.lineSeparator;
 public class ChatCache {
     private String getLogPath(String roomId) {
         String chatLogPath = "logs/";
-        return chatLogPath + "room_" + roomId + ".txt";
+        System.out.println(chatLogPath + "room_" + roomId + ".txt");
+        return chatLogPath + "room_" + roomId + ".log";
     }
 
     /**
@@ -30,7 +31,7 @@ public class ChatCache {
             bufferedWriter.newLine();
         }
         catch (IOException e) {
-            ExceptionLogger.logException("Cannot save this message to chat log file", e);
+            ExceptionLogger.logExceptionQuiet("Cannot save this message to chat log file", e);
         }
     }
 
@@ -50,7 +51,7 @@ public class ChatCache {
             }
             return historyChatCache.toString();
         } catch (IOException e) {
-            ExceptionLogger.logException("Cannot read from chat log file", e);
+            ExceptionLogger.logExceptionQuiet("Cannot read from chat log file", e);
             return "";
         }
     }

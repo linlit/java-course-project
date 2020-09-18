@@ -37,11 +37,11 @@ public class Server {
                 executor.submit(() -> run(inputStream, outputStream));
             }
         } catch (IOException e) {
-            ExceptionLogger.logException("Server stopped", e);
+            ExceptionLogger.logExceptionQuiet("Server stopped", e);
         }
     }
 
-    private static void run(DataInputStream inputStream, DataOutputStream outputStream) {
+    public static void run(DataInputStream inputStream, DataOutputStream outputStream) {
         User user = new User(outputStream);
         observer.subscribeToChat("main", user);
 
@@ -54,7 +54,7 @@ public class Server {
             } catch (IOException e) {
                 new ExitReactor(user, observer).react();
             } catch (InvalidMessageException| SendMessageException e) {
-                ExceptionLogger.logException("Cannot perform client action for client " + user, e);
+                ExceptionLogger.logExceptionQuiet("Cannot perform client action for client " + user, e);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.acme.edu.client;
 
+import com.acme.edu.exception.ExceptionLogger;
 import com.acme.edu.exception.InvalidMessageException;
 
 import java.text.SimpleDateFormat;
@@ -19,10 +20,10 @@ public class MessagePreprocessor {
         return delta + dtf.format(now) + " " + message.substring(delta.length());
     }
 
-    private void filterLen(String message) throws InvalidMessageException {
+    private void filterLen(String message) {
         if (message.length() > 150) {
-            System.out.println("Message length is over 150 characters");
-            throw new InvalidMessageException();
+            ExceptionLogger.logExceptionWithInfo(
+                    "Message length is over 150 characters", new InvalidMessageException());
         }
     }
 
@@ -31,7 +32,7 @@ public class MessagePreprocessor {
                 "/exit".equals(message) || message.startsWith("/chroom ") || message.startsWith("/sdnp");
     }
 
-    public String getFilteredMessage(String message) throws InvalidMessageException {
+    public String getFilteredMessage(String message) {
         if (message.startsWith("/snd ")) {
             filterLen(message.substring(5));
             return decorate(message, "/snd ");
@@ -44,8 +45,8 @@ public class MessagePreprocessor {
         if (checkIfCorrectCommand(message)) {
             return message;
         } else {
-            System.out.println("Unknown command");
-            throw new InvalidMessageException();
+            ExceptionLogger.logExceptionWithInfo("Unknown command", new InvalidMessageException());
+            return "";
         }
     }
 
